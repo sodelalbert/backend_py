@@ -54,4 +54,4 @@ jobs:
         uses: ./.github/actions/setup
 
       - name: Build
-        run: uv run build .
+        run: uv build .
