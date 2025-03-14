@@ -2,6 +2,7 @@ name: Static Code Analysis
 on: [ push ]
 jobs:
   lock_file:
+    name: UV Lock File
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -9,6 +10,7 @@ jobs:
       - run: uv lock --locked
 
   linting: 
+    name: Linting
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -16,6 +18,7 @@ jobs:
       - run: uvx ruff check .
 
   formatting:
+    name: Formatting
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -23,6 +26,7 @@ jobs:
       - run: uvx ruff format .
 
   typing_mypy:
+    name: Typing with mypy
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
