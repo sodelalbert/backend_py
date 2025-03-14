@@ -12,5 +12,11 @@ dependencies = [
     "ruff>=0.10.0",
 ]
 
+[tool.pytest.ini_options]
+addopts = "-v"
+testpaths = [
+    "tests",
+]
+
 [tool.ruff]
 line-length = 88
