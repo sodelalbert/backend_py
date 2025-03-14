@@ -30,3 +30,5 @@ venv/
 # FastAPI specific
 *.log
 
+# UV Lock
+uv.lock
