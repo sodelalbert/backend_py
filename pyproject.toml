@@ -20,3 +20,10 @@ testpaths = [
 
 [tool.ruff]
 line-length = 88
+
+[tool.mypy]
+disallow_untyped_calls = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+warn_redundant_casts = true
+warn_unused_ignores = true

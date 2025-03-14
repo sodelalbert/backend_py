@@ -1,7 +1,9 @@
-# Byte-compiled / optimized / DLL files
-__pycache__
-*.py[cod]
-*$py.class
+# Ignore all __pycache__ directories recursively
+*/__pycache__/
+
+# Ignore Python bytecode files
+*.pyc
+*.pyo
 
 # Distribution / packaging
 build/

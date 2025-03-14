@@ -5,7 +5,7 @@ app = FastAPI()
 
 
 @app.get("/")
-async def read_root():  # coroutine
+async def read_root() -> dict:
     return {"message": "Hello World"}
 
 
