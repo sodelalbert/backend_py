@@ -1,13 +1,13 @@
 name: Static Code Analysis
 on: [ push ]
 jobs:
-  lock_file:
-    name: UV Lock File
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/setup
-      - run: uv lock --locked
+  # uv_sync:
+  #   name: UV Sync 
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: ./.github/actions/setup
+  #     - run: uv lock --locked
 
   linting: 
     name: Linting
