@@ -13,11 +13,10 @@ dependencies = [
 ]
 
 [tool.pytest.ini_options]
-addopts = "-v"
+addopts = ["-v"]
 testpaths = [
     "tests",
 ]
-asyncio_default_fixture_loop_scope = "function"
 
 [tool.ruff]
 line-length = 88
