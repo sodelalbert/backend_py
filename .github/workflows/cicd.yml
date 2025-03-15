@@ -9,8 +9,21 @@ on:
       - main
 
 jobs:
-  static_code_analysis:
-    name: Static Code Analysis
+  linting:
+    name: Linting
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install UV 
+        uses: ./.github/actions/setup
+        
+      - name: Linting
+        run: uvx ruff check .
+
+  formatting:
+    name: Formatting
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -19,19 +32,26 @@ jobs:
       - name: Install UV 
         uses: ./.github/actions/setup
 
-      - name: Linting
-        run: uvx ruff check .
-
       - name: Formatting
         run: uvx ruff format .
-      
-      - run: uvx ruff format .
-      - run: uv run mypy .
+
+  mypy:
+    name: mypy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install UV 
+        uses: ./.github/actions/setup
+
+      - name: mypy
+        run: uv run mypy .
 
   testing:
     name: Testing
     runs-on: ubuntu-latest
-    needs: static_code_analysis
+    needs: [linting, formatting, mypy]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -45,7 +65,7 @@ jobs:
   build:
     name: Building
     runs-on: ubuntu-latest
-    needs: testing
+    needs: [linting, formatting, mypy]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
