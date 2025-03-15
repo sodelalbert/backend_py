@@ -69,6 +69,11 @@ async def get_book_by_id(book_id: int) -> dict:
 @app.post("/books", status_code=status.HTTP_201_CREATED, response_model=Book)
 async def create_book(book_data: Book) -> dict:
     new_book = book_data.model_dump()
+    for book in books:
+        if book["id"] == new_book["id"]:
+            raise HTTPException(
+                status_code=400, detail="Book with this ID already exists"
+            )
     books.append(new_book)
     return new_book
 

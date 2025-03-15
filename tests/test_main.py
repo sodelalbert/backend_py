@@ -1,29 +1,36 @@
 from fastapi.testclient import TestClient
 from app.main import app
 from app.main import books
+import pytest
+from app.main import app, books
+
 
 client = TestClient(app)
 
 
-def test_get_all_books():
+@pytest.mark.asyncio
+async def test_get_all_books():
     response = client.get("/books")
     assert response.status_code == 200
     assert len(response.json()) == len(books)
 
 
-def test_get_book_by_id():
+@pytest.mark.asyncio
+async def test_get_book_by_id():
     response = client.get("/books/1")
     assert response.status_code == 200
     assert response.json()["id"] == 1
 
 
-def test_get_book_by_id_not_found():
+@pytest.mark.asyncio
+async def test_get_book_by_id_not_found():
     response = client.get("/books/999")
     assert response.status_code == 404
     assert response.json() == {"detail": "Book not found"}
 
 
-def test_create_book():
+@pytest.mark.asyncio
+async def test_create_book():
     new_book = {
         "id": 4,
         "title": "New Book",
@@ -38,7 +45,25 @@ def test_create_book():
     assert response.json() == new_book
 
 
-def test_update_book():
+@pytest.mark.asyncio
+async def test_create_book_with_existing_id():
+    new_book = {
+        "id": 5,
+        "title": "Duplicate Book",
+        "author": "Duplicate Author",
+        "publisher": "Duplicate Publisher",
+        "published_date": "2023-01-01",
+        "page_count": 100,
+        "language": "English",
+    }
+    client.post("/books", json=new_book)
+    response = client.post("/books", json=new_book)
+    assert response.status_code == 400
+    assert response.json() == {"detail": "Book with this ID already exists"}
+
+
+@pytest.mark.asyncio
+async def test_update_book():
     updated_data = {
         "title": "Updated Title",
         "author": "Updated Author",
@@ -51,7 +76,8 @@ def test_update_book():
     assert response.json()["title"] == "Updated Title"
 
 
-def test_update_book_not_found():
+@pytest.mark.asyncio
+async def test_update_book_not_found():
     updated_data = {
         "title": "Updated Title",
         "author": "Updated Author",
@@ -64,13 +90,15 @@ def test_update_book_not_found():
     assert response.json() == {"detail": "Book not found"}
 
 
-def test_delete_book():
+@pytest.mark.asyncio
+async def test_delete_book():
     response = client.delete("/books/1")
     assert response.status_code == 200
     assert response.json() == {"detail": "Book deleted"}
 
 
-def test_delete_book_not_found():
+@pytest.mark.asyncio
+async def test_delete_book_not_found():
     response = client.delete("/books/999")
     assert response.status_code == 404
     assert response.json() == {"detail": "Book not found"}
