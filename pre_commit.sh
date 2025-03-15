@@ -13,9 +13,10 @@ uv sync
 echo "✅ Checking lock file"
 uv lock --locked || { echo "❌ Lock file check failed"; exit 1; }
 
-# Step 2: Linting with Ruff
-echo "✅ Running Ruff linting"
-uvx ruff check . || { echo "❌ Linting failed"; exit 1; }
+# Step 2: Linting with Ruff and Fix
+echo "✅ Running Ruff linting with fix"
+uvx ruff check . --fix  || { echo "❌ Linting failed"; exit 1; }
+
 
 # Step 3: Formatting with Ruff
 echo "✅ Running Ruff formatting"
