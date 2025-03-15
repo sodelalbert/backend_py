@@ -35,3 +35,6 @@ venv/
 # UV Lock
 uv.lock
 .ruff_cache/
+
+# PyCharm
+.idea/
